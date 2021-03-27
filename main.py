@@ -4,7 +4,7 @@ import re
 def check(dice):
     dice_type_allowed = ["D3", "D4", "D6", "D8", "D10", "D12", "D20", "D100"]
     result = False
-    for kosc in dice_type_allowed:                                  #dice type exist
+    for kosc in dice_type_allowed:                                  # dice type exist
         if kosc in dice:
             dice_type = re.split('[D+-]', dice)
             if len(dice_type[1]) > 0 and len(dice_type[1]) <= 3:
@@ -13,10 +13,33 @@ def check(dice):
                     multipl = dice[:multipl]
                     try:
                         int(multipl)
-                        result = True
                     except:
                         result = False
                         return result
+                if "+" in dice:
+                    d = dice.find("D")
+                    modi = dice[d+1:]
+                    modi = modi.replace("+", "0")
+                    try:
+                        int(modi)
+                        result = True
+                        return result
+                    except:
+                        result = False
+                        return result
+                if "-" in dice:
+                    d = dice.find("D")
+                    modi = dice[d+1:]
+                    modi = modi.replace("-", "0")
+                    try:
+                        int(modi)
+                        result = True
+                        return result
+                    except:
+                        result = False
+                        return result
+            result = True
+            return result
     return result
 
 
@@ -40,13 +63,17 @@ def roll(input_roll):
 
 
 
-print(roll("2D10+10"))
-# print(roll("sD10+10"))
-# print(roll("czsafda"))
-# print(roll("2D1+10"))
-# print(roll("2D10+10"))
-#
-# print(roll("D6"))
-# print(roll("2D3"))
-# print(roll("D12-10"))
-# print(roll("3D12+10"))
+print(roll("2D10-10"))  # ok
+print(roll("sD10+10"))  # napis na początku
+print(roll("czsafda"))  # to nie kostka
+print(roll("2D1+10"))   # zły typ kostki
+print(roll("2D10+10"))  # ok
+print(roll("D6+10"))    # ok
+print(roll("D6"))       # ok
+print(roll("2D3"))      # ok
+print(roll("D12-10"))   # ok
+print(roll("3D12+10"))  # ok
+# print(roll("D12++1"))   # za dużo znaków - do wprowadzenia
+# print(roll("D12+-1"))   # za dużo znaków - do wprowadzenia
+# print(roll("D12++1"))   # za dużo znaków - do wprowadzenia
+# print(roll("D12+-1"))   # za dużo znaków - do wprowadzenia
