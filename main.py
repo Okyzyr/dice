@@ -56,7 +56,6 @@ def roll(input_roll):
             result -= int(dice_roll[2])
         if "+" in input_roll:
             result += int(dice_roll[2])
-         #   result = (int(roll_multiplier) * randint(1, int(dice_roll[1])) + int(modifier))
         return result
     else:
         return "Wrong dice"
