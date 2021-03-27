@@ -44,22 +44,23 @@ def check(dice):
 
 
 def roll(input_roll):
+    result = 0
     if check(input_roll) == True:
         dice_roll = re.split('[D+-]', input_roll)
         if dice_roll[0] == "":
             dice_roll[0] = "1"
         roll_multiplier = int(dice_roll[0])
-        result = int(roll_multiplier) * randint(1, int(dice_roll[1]))
+        for i in range(roll_multiplier):
+            result += randint(1, int(dice_roll[1]))
         if "-" in input_roll:
-            modifier = dice_roll[2]
-            result = (int(roll_multiplier) * randint(1, int(dice_roll[1])) - int(modifier))
+            result -= int(dice_roll[2])
         if "+" in input_roll:
-            modifier = dice_roll[2]
-            result = (int(roll_multiplier) * randint(1, int(dice_roll[1])) + int(modifier))
+            result += int(dice_roll[2])
+         #   result = (int(roll_multiplier) * randint(1, int(dice_roll[1])) + int(modifier))
         return result
     else:
-        result = "Wrong dice"
-        return result
+        return "Wrong dice"
+
 
 
 
@@ -67,7 +68,7 @@ print(roll("2D10-10"))  # ok
 print(roll("sD10+10"))  # napis na początku
 print(roll("czsafda"))  # to nie kostka
 print(roll("2D1+10"))   # zły typ kostki
-print(roll("2D10+10"))  # ok
+print(roll("4D10-10"))  # ok
 print(roll("D6+10"))    # ok
 print(roll("D6"))       # ok
 print(roll("2D3"))      # ok
