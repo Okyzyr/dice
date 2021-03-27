@@ -4,9 +4,19 @@ import re
 def check(dice):
     dice_type_allowed = ["D3", "D4", "D6", "D8", "D10", "D12", "D20", "D100"]
     result = False
-    for i in dice_type_allowed:
-        if i in dice:
-            result = True
+    for kosc in dice_type_allowed:                                  #dice type exist
+        if kosc in dice:
+            dice_type = re.split('[D+-]', dice)
+            if len(dice_type[1]) > 0 and len(dice_type[1]) <= 3:
+                if dice_type[0] != "":                              # multipler is int
+                    multipl = dice.find("D")
+                    multipl = dice[:multipl]
+                    try:
+                        int(multipl)
+                        result = True
+                    except:
+                        result = False
+                        return result
     return result
 
 
@@ -29,10 +39,14 @@ def roll(input_roll):
         return result
 
 
-print(roll("czsafda"))
-print(roll("2D1+10"))
+
 print(roll("2D10+10"))
-print(roll("D6"))
-print(roll("2D3"))
-print(roll("D12-10"))
-print(roll("3D12+10"))
+# print(roll("sD10+10"))
+# print(roll("czsafda"))
+# print(roll("2D1+10"))
+# print(roll("2D10+10"))
+#
+# print(roll("D6"))
+# print(roll("2D3"))
+# print(roll("D12-10"))
+# print(roll("3D12+10"))
